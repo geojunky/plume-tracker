@@ -1,0 +1,8 @@
+Import('env')
+env.Append(CPPPATH=['.'])
+env.Append(CPPPATH=['../mem'])
+env.Append(CPPPATH=['../io'])
+env.Append(CCFLAGS=['-fopenmp'])
+
+env.Library('tree', ['KdItem.cc', 'KdNode.cc', 'KdTree.cc', 'Geometry.cc', 'TimeSlices.cc', 'stripack.cc', 'ssrfpack.cc'])
+

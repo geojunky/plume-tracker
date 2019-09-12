@@ -1,0 +1,4 @@
+Import('env')
+env.Append(CPPPATH=['.'])
+env.Append(CPPPATH=['../mesh'])
+env.Library('solver', ['cluster.c'])

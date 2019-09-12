@@ -1,0 +1,14 @@
+Import('env')
+# We require mem
+env.Append(CPPPATH=['../mem/'])
+env.Append(CPPPATH=['../mesh/'])
+env.Append(CPPPATH=['../io/'])
+env.Append(CPPPATH=['../solver/'])
+
+libs=['mem', 'tree', 'io', 'solver', 'gomp', 'f2c']
+
+#Linker flags
+if('-pg' in env['CCFLAGS']): env.Append(LINKFLAGS=['-pg'])
+
+env.Program('plumeTrackFast', ['plumeTrackFast.cc'], CCFLAGS=env['CCFLAGS'], LIBS=libs, LIBPATH=['../mem', '../mesh', '../io', '../solver'])
+
