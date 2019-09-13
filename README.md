@@ -171,6 +171,8 @@ The above should produce the following in the `plume350` folder:
           concentration   :   concentration of anomalous material, as a 
                               fraction, near the surface
  ```
- 2. Three plots, corresponding to the model timesteps, showing plumes detected in each
+ 2. Three plots, corresponding to the model timesteps, showing plumes detected in each, e.g. at 65 Myr below: ![test](/sample_output/gpm58.plumes.clustered.65.txt.png)
+
  3. `plume350/supp/`, a folder containing supplementary plots for each detected plume, shown in a local coordinate system
  
+
