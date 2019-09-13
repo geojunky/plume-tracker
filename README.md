@@ -70,7 +70,7 @@ This program is free and without warranty.
 
 Steps to generate cluster analyses outputs are as follows:
 
- * In your work area untar and unzip `data.tar.gz`, which contains cap files for a model at times 0, 65 and 70 Myr. Typically, cap files are output every 5 Myr -- to keep the data volume manageable, example data for only three timesteps are provided here. Note that cap files for the 0th timestep are mandetory.
+ * In your work area untar and unzip `data.tar.gz`, which contains cap files for a model at times 0, 65 and 70 Myr. Typically, cap files are output every 5 Myr -- to keep the data volume manageable, example data for only three timesteps are provided here. Note that cap files for the 0th timestep are mandatory.
  * create a folder in your work area named e.g. `output`
  * Run the following command to generate cluster analyses output for the above timesteps.
  
@@ -98,8 +98,9 @@ TVD         : as T, but at validation-depth
 EtaVD       : as Eta, but at validation-depth
 dataVD      : as data, but at validation-depth
 cidVD       : as cid, but at validation-depth
-tracComp    : composition of tracer id given by --tracer-flavour, 
-              at a model depth given by --start-depth
+tracComp    : composition (as a fraction) of tracer id  
+              given by --tracer-flavour, at a model depth 
+              given by --start-depth
 ```
 
 ## (ii) Postprocessing with `plotPlumeAscentRate.py`
@@ -141,10 +142,35 @@ Steps for postprocessing output from (i) are as follows:
 ```
 <path-to-plume-tracker>/postprocess/plotPlumeAscentRate.py -b ../output/gpm58.plumes.clustered -d ../data/reconstructedShapeFiles/ -n ../data/neighbours.txt -r 10 -s 230 -o plume350/plumes.gpm58.txt
 ```
-Note that the `reconstructedShapeFiles` folder contains reconstructed shapefiles for ages corresponding to the available model times in this example. The `neighbours.txt` contains natural neighour indices for each node of the CitcomS mesh at the surface and is obtained through spherical triangulation. Note that this file corresponds to a CitcomS mesh of resolution (129x129x65 x 12); a different resolution mesh would require regenerating this file.
+Note that the `reconstructedShapeFiles` folder contains reconstructed shapefiles for ages corresponding to the available model times in this example. The `neighbours.txt` contains natural neighbour indices for each node of the CitcomS mesh at the surface and is obtained through a spherical triangulation. Note that this file corresponds to a CitcomS mesh of resolution (129x129x65 x 12); a different resolution mesh would require regenerating this file.
 
 The above should produce the following in the `plume350` folder:
 
- 1. `plumes.gpm58.txt`, a text file containing the following columns:
+ 1. `plumes.gpm58.txt`, a text file (column descriptions below) containing entries, grouped by model time, for plumes detected
  ```
+           #column-name        description
+          time            :   model time (Myr)
+          theta           :   latitude (degrees)
+          phi             :   longitude (degrees)
+          T               :   nondimensional temperature
+          Vr              :   radial velocity (m/Myr)
+          Flux            :   buoyancy flux (Mg/s)
+          Area            :   conduit area (km2)
+          Eruption        :   if a plume wasn't detected within 500 km of 
+                              the current location in the preceding 5 Myr, 
+                              a detected plume is considered a new eruption
+                              and this flag is set to 1; 0 otherwise
+          meanBgTemp      :   a secondary mean nondimensional temperature, 
+                              computed based on nodes that are warmer than
+                              the mean temperature within a ~400 km region
+                              around a plume conduit
+          avgConduitTemp  :   mean temperature within a plume conduit. 
+                              See appendix A in Hassan et al. (2015) for a 
+                              detailed account of how plume conduits are
+                              delineated
+          concentration   :   concentration of anomalous material, as a 
+                              fraction, near the surface
  ```
+ 2. Three plots, corresponding to the model timesteps, showing plumes detected in each
+ 3. `plume350/supp/`, a folder containing supplementary plots for each detected plume, shown in a local coordinate system
+ 
