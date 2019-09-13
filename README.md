@@ -68,16 +68,16 @@ plumeTrackFast v(0.1), Copyright (C) 2014 Rakib Hassan (rakib.hassan@sydney.edu.
 This program is free and without warranty.
 ```
 
-Steps to reproduce the example outputs in `example_output.tar.gz` are as follows:
+Steps to generate cluster analyses outputs are as follows:
 
- * Untar and unzip `data.tar.gz`, which contains cap files for a model at times 0, 65 and 70 Myr. Typically, cap files are output every 5 Myr -- to keep the data volume manageable, data for only three timesteps are provided here. Note that cap files for the 0th timestep are mandetory.
+ * In your work area untar and unzip `data.tar.gz`, which contains cap files for a model at times 0, 65 and 70 Myr. Typically, cap files are output every 5 Myr -- to keep the data volume manageable, example data for only three timesteps are provided here. Note that cap files for the 0th timestep are mandetory.
  * create a folder in your work area named e.g. `output`
  * Run the following command to generate cluster analyses output for the above timesteps.
  
  ```
  <path-to-plume-tracker>/fast/build/release/program/plumeTrackFast --data-file gpm58 --data-dir data/gpm58/cap --time-file data/gpm58/cap/times.txt --velocity-scale 4.953209857165279 --radius 6371e3 --start-time 0 --stop-time 230 --output-file-basename output/gpm58.plumes --start-depth 350e3 --validation-depth 1500e3 --cutoff-percentile 5 --tracer-flavour 5
  ```
-Note that the `--velocity-scale` parameter is used to convert the non-dimensional model velocities to units of m/Myr and is obtained as described in the CitcomS manual. The above should produce three files, corresponding to the three timesteps, in the output folder. The column-descripts are as follows:
+Note that the `--velocity-scale` parameter is used to convert the non-dimensional model velocities to units of m/Myr and is obtained as described in the CitcomS manual. The above should produce three files, corresponding to the three timesteps, in the output folder. The column-descriptions are as follows:
 
 ```
 #column-name  description
@@ -104,5 +104,47 @@ tracComp    : composition of tracer id given by --tracer-flavour,
 
 ## (ii) Postprocessing with `plotPlumeAscentRate.py`
 
+`./plotPlumeAscentRate.py -h` produces the following help message:
+
+```
+Usage:
+
+Plots results from cluster-analysis from plumeTrackFast
+
+Usage 1: plotPlumeAscentRate.py -b <base file-name> -d <reconstruction-directory> -n <neighbour file-name> -r <radial-velocity minimum> -s <start-age> -o <output file-name>
 
 
+
+Options:
+  -h, --help            show this help message and exit
+  -b BASENAME, --base-name=BASENAME
+                        File name for clustered data
+  -d RECONSPATH, --directory=RECONSPATH
+                        Path to reconstruction files
+  -s STARTAGE, --start-age=STARTAGE
+                        Start age
+  -n NBFILENAME, --neighbours=NBFILENAME
+                        File containing node-neighbours from spherical
+                        triangulation
+  -r RADIALVELOCITYMIN, --radial-velocity-minimum (cm/yr)=RADIALVELOCITYMIN
+                        Minimum radial velocity that a plume-conduit must meet
+                        to be considered as such
+  -o OUTFILENAME, --output-file=OUTFILENAME
+                        Output-file name
+```
+
+Steps for postprocessing output from (i) are as follows:
+
+* Create another sibling output folder, e.g. `plume350`
+* Run the following:
+
+```
+<path-to-plume-tracker>/postprocess/plotPlumeAscentRate.py -b ../output/gpm58.plumes.clustered -d ../data/reconstructedShapeFiles/ -n ../data/neighbours.txt -r 10 -s 230 -o plume350/plumes.gpm58.txt
+```
+Note that the `reconstructedShapeFiles` folder contains reconstructed shapefiles for ages corresponding to the available model times in this example. The `neighbours.txt` contains natural neighour indices for each node of the CitcomS mesh at the surface and is obtained through spherical triangulation. Note that this file corresponds to a CitcomS mesh of resolution (129x129x65 x 12); a different resolution mesh would require regenerating this file.
+
+The above should produce the following in the `plume350` folder:
+
+ 1. `plumes.gpm58.txt`, a text file containing the following columns:
+ ```
+ ```
