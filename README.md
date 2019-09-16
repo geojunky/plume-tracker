@@ -1,6 +1,6 @@
 # plume-tracker
 
-Workflow for detecting plumes in CitcomS global mantle-flow models.
+Workflow for detecting plumes in CitcomS global mantle-flow models. This code was written as part of [Hassan et al. (2015)](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2015GC005751) -- please consider citing this work if you find the code useful.
 
 # Prerequisites
 
