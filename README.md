@@ -5,7 +5,7 @@ Workflow for detecting plumes in CitcomS global mantle-flow models.
 # Prerequisites
 
 ## Linux
-`scons`: A python build utility can be installed on linux systems using the system package manager, e.g. `apt` on Ubuntu.
+`scons`: A python build utility that can be installed on linux systems using the system package manager, e.g. `apt` on Ubuntu.
 
 `libf2c`: A `fortran` compatibility library that can also be installed on most linux systems using the system package manager
 
@@ -175,4 +175,5 @@ The above should produce the following in the `plume350` folder:
 
  3. `plume350/supp/`, a folder containing supplementary plots for each detected plume, shown in a local coordinate system
  
+
 
