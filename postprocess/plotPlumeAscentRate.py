@@ -42,8 +42,6 @@ import matplotlib.patches as mpatches
 from scipy.interpolate import LinearNDInterpolator
 from pyrr import quaternion, matrix44, vector3, vector4
 
-import Pycluster as pc
-
 #spatial
 from matplotlib.collections import PatchCollection
 from descartes import PolygonPatch
@@ -62,9 +60,12 @@ Usage 1: plotPlumeAscentRate.py -b <base file-name> -d <reconstruction-directory
 
 RADIUS = 6371e3
 THERM_DIFF = 1e-6
-MIN_PLUME_DIST = 500e3
-MAX_PLUME_OFFSET = 1000e3
-PLUME_PLOT_RADIUS = 400e3
+MIN_PLUME_DIST = 500e3 # minimum distance between two plume conduits
+MAX_PLUME_OFFSET = 1000e3 # max lateral distance between plume axis near the 
+                          # surface and at depth, for a given plume -- in other 
+                          # words, the max tilt
+PLUME_PLOT_RADIUS = 400e3 # radius of region around a plume conduit, used for
+                          # buoyancy flux calculations
 VSCALE = 1e-4 # convert from m/Myr to cm/yr
 DENSITY = 4e3 #kg/m3
 THERMAL_EXPANSIVITY = 2.875e-5
